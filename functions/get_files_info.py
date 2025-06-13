@@ -2,6 +2,8 @@ import os
 def get_files_info(working_directory, directory=None):
     try:
         abs_working_path = os.path.abspath(working_directory)
+        if directory is None:
+            directory = ""
         abs_path = os.path.abspath(os.path.join(working_directory, directory))
 
         # print(abs_working_path)
