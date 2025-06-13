@@ -17,12 +17,16 @@ class Calculator:
         }
 
     def evaluate(self, expression):
+        print("evaluate: " + str(expression))
         if not expression or expression.isspace():
             return None
         tokens = expression.strip().split()
-        return self._evaluate_infix(tokens)
+        result = self._evaluate_infix(tokens)
+        print("evaluate result: " + str(result))
+        return result
 
     def _evaluate_infix(self, tokens):
+        print("_evaluate_infix: " + str(tokens))
         values = []
         operators = []
 
@@ -33,7 +37,9 @@ class Calculator:
                     and operators[-1] in self.operators
                     and self.precedence[operators[-1]] >= self.precedence[token]
                 ):
+                    print("Before _apply_operator (while loop)")
                     self._apply_operator(operators, values)
+                    print("After _apply_operator (while loop)")
                 operators.append(token)
             else:
                 try:
@@ -42,11 +48,14 @@ class Calculator:
                     raise ValueError(f"invalid token: {token}")
 
         while operators:
+            print("Before _apply_operator (end)")
             self._apply_operator(operators, values)
+            print("After _apply_operator (end)")
 
         if len(values) != 1:
             raise ValueError("invalid expression")
 
+        print("_evaluate_infix result: " + str(values[0]))
         return values[0]
 
     def _apply_operator(self, operators, values):
